@@ -22,7 +22,7 @@ Inside the container, I ran the following command to check the pip version:
 
 pip --version
 
-The Output was:
+### The Output was:
 pip 24.3.1 from /usr/local/lib/python3.12/site-packages/pip (python 3.12)
 
 So the correct pip version in the python:3.12.8 image is 24.3.1.
