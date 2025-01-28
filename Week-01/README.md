@@ -17,7 +17,7 @@ I ran the following command to start a Docker container with the `python:3.12.8`
 
 docker run -it python:3.12.8 bash
 
-##Step 2: Checking pip version
+### Step 2: Checking pip version
 Inside the container, I ran the following command to check the pip version:
 
 pip --version
