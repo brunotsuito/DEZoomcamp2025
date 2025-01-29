@@ -28,6 +28,7 @@ pip --version
 pip 24.3.1 from /usr/local/lib/python3.12/site-packages/pip (python 3.12)
 ```
 So the correct pip version in the python:3.12.8 image is 24.3.1.
+<br><br>
 
 
 ## Question 2:
@@ -83,6 +84,7 @@ so the answer is:
 Hostname: db
 
 Port: 5432
+<br><br>
 
 
 ## Preparing Postgres
@@ -122,6 +124,8 @@ df_zones = pd.read_csv('taxi_zone_lookup.csv')
 df_zones.head()
 df_zones.to_sql(name='zones', con=engine, if_exists='replace')
 ```
+<br><br>
+
 
 ## Question 3:
 
@@ -142,7 +146,7 @@ Answers:
 - 104,838; 199,013; 109,645; 27,688; 35,202
 
 ### Solution
-###1
+1.
 ```sql
 select 
 	count(1)
@@ -155,7 +159,7 @@ AND
 AND
 	trip_distance <= 1;
 ```
-Results in: 104802
+Output: 104802
 
 2.
 ```sql
@@ -170,7 +174,81 @@ AND
 AND
 	trip_distance > 1 and trip_distance <= 3;
 ```
-Results in: 198924
+Output: 198924
+
+3.
+```sql
+select 
+	count(1)
+from 
+	green_trip_hmwk g
+where
+	g.lpep_pickup_datetime >= '2019-10-01' and g.lpep_pickup_datetime < '2019-11-01'
+AND
+	g.lpep_dropoff_datetime >= '2019-10-01' and g.lpep_dropoff_datetime < '2019-11-01'
+AND
+	trip_distance > 3 and trip_distance <= 7;
+````
+Output: 109603
+
+4.
+```sql
+select 
+	count(1)
+from 
+	green_trip_hmwk g
+where
+	g.lpep_pickup_datetime >= '2019-10-01' and g.lpep_pickup_datetime < '2019-11-01'
+AND
+	g.lpep_dropoff_datetime >= '2019-10-01' and g.lpep_dropoff_datetime < '2019-11-01'
+AND
+	trip_distance > 7 and trip_distance <= 10;
+```
+Output: 27678
+
+5.
+```sql
+
+select 
+	count(1)
+from 
+	green_trip_hmwk g
+where
+	g.lpep_pickup_datetime >= '2019-10-01' and g.lpep_pickup_datetime < '2019-11-01'
+AND
+	g.lpep_dropoff_datetime >= '2019-10-01' and g.lpep_dropoff_datetime < '2019-11-01'
+AND
+	trip_distance > 10;
+```
+Output: 35189
 
 
+## Question 4:
 
+Which was the pick up day with the longest trip distance? Use the pick up time for your calculations.
+
+Tip: For every day, we only care about one single trip with the longest distance.
+
+- 2019-10-11
+- 2019-10-24
+- 2019-10-26
+- 2019-10-31
+
+### Solution
+
+```sql
+select 
+	cast(lpep_pickup_datetime as DATE) as "Day",
+	max(trip_distance) as longest_trip
+from 
+	green_trip_hmwk g
+group by
+	1
+order by 
+	longest_trip desc
+Limit 1;
+```
+
+Output:
+Day: 2019-10-31
+Distance: 515.89
